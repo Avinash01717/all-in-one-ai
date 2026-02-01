@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Categories - All in One AI</title>
+    <link rel="stylesheet" href="/static/css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+</head>
+
+<body>
+    <div class="background-gradient"></div>
+    <div class="container">
+        <header style="margin-bottom: 2rem; display: flex; align-items: center; justify-content: space-between;">
+            <a href="/home" style="color: var(--text-muted); text-decoration: none;">&larr; Back to Home</a>
+            <h2 style="margin: 0; text-transform: capitalize;">{{ type }} Tools</h2>
+            <div style="width: 100px;"></div> <!-- Spacer -->
+        </header>
+
+        <!-- Search Bar (Optional for later) -->
+
+        <div id="tools-container" class="tools-grid">
+            <!-- Tools will be injected here via JS or Jinja -->
+            <!-- Using Jinja for simplicity with mock data for now -->
+
+            <!-- Mock Data Placeholder - In real app, this comes from DB -->
+            <!-- We will handle this in main.py or fetching from Firebase -->
+            <div class="glass-card tool-card">
+                <div class="tool-icon">🎨</div>
+                <div class="tool-name">Loading Tools...</div>
+                <div class="tool-desc">Fetching latest {{ type }} tools from database.</div>
+            </div>
+        </div>
+    </div>
+
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+        import { getFirestore, collection, getDocs, query, where } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+
+        const firebaseConfig = {
+            apiKey: "YOUR_API_KEY",
+            authDomain: "YOUR_PROJECT_ID.firebaseapp.com",
+            projectId: "YOUR_PROJECT_ID",
+            storageBucket: "YOUR_PROJECT_ID.appspot.com",
+            messagingSenderId: "SENDER_ID",
+            appId: "APP_ID"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+        const type = "{{ type }}";
+
+        // Mock data generator if firebase is not configured
+        const getMockTools = (type) => {
+            const common = [
+                { name: "ChatGPT", category: "Chatbot", url: "https://chat.openai.com", icon: "💬" },
+                { name: "Midjourney", category: "Image Gen", url: "https://www.midjourney.com", icon: "🎨" },
+            ];
+
+            if (type === 'paid') {
+                return [
+                    ...common,
+                    { name: "Jasper", category: "Copywriting", url: "https://www.jasper.ai", icon: "📝" },
+                    { name: "Adobe Firefly", category: "Image Gen", url: "https://firefly.adobe.com", icon: "✨" },
+                ];
+            } else {
+                return [
+                    { name: "Stable Diffusion", category: "Image Gen", url: "https://stability.ai", icon: "🖼️" },
+                    { name: "HuggingChat", category: "Chatbot", url: "https://huggingface.co/chat", icon: "🤗" },
+                ];
+            }
+        };
+
+        async function loadTools() {
+            const container = document.getElementById('tools-container');
+
+            try {
+                // Try fetching from our local API first (which reads the JSON)
+                const response = await fetch(`/api/tools?type=${type}`);
+                if (response.ok) {
+                    const tools = await response.json();
+                    renderTools(tools);
+                    return;
+                }
+            } catch (err) {
+                console.warn("API fetch failed, falling back to mock/firebase", err);
+            }
+
+            // Check if config is dummy
+            if (firebaseConfig.apiKey === "YOUR_API_KEY") {
+                console.log("Using mock data fallback");
+                const tools = getMockTools(type);
+                renderTools(tools);
+                return;
+            }
+
+            try {
+                const q = query(collection(db, "tools"), where("type", "==", type));
+                const querySnapshot = await getDocs(q);
+                const tools = [];
+                querySnapshot.forEach((doc) => {
+                    tools.push(doc.data());
+                });
+                renderTools(tools);
+            } catch (e) {
+                console.error("Error loading tools:", e);
+                container.innerHTML = "<p>Error loading tools. Please try again later.</p>";
+            }
+        }
+
+        function renderTools(tools) {
+            const container = document.getElementById('tools-container');
+            container.innerHTML = '';
+
+            tools.forEach(tool => {
+                const el = document.createElement('a');
+                el.className = 'glass-card tool-card';
+                el.href = tool.url;
+                el.target = "_blank"; // Open in new tab
+
+                el.innerHTML = `
+                    <div class="tool-icon">${tool.icon || '🛠️'}</div>
+                    <div class="tool-name">${tool.name}</div>
+                    <div class="tool-desc">${tool.category}</div>
+                `;
+                container.appendChild(el);
+            });
+        }
+
+        loadTools();
+    </script>
+</body>
+
+</html>

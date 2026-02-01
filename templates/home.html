@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home - All in One AI</title>
+    <link rel="stylesheet" href="/static/css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+
+<body>
+    <div class="background-gradient"></div>
+    <div class="container fade-in-up">
+        <header class="home-header">
+            <h1 class="login-title" style="margin-bottom: 0.5rem;">All in One AI</h1>
+            <p style="color: var(--text-muted); font-size: 1.1rem;">Choose your path.</p>
+        </header>
+
+        <div class="section-grid">
+            <div class="glass-card section-card" onclick="window.location.href='/subcategories?type=paid'">
+                <img src="/static/images/plan_paid_1769965741165.png" alt="Paid Plan" class="card-img-top">
+                <div class="section-title">Paid Tools</div>
+                <div class="section-desc">Premium, enterprise-grade AI solutions.</div>
+            </div>
+
+            <div class="glass-card section-card" onclick="window.location.href='/subcategories?type=unpaid'">
+                <img src="/static/images/plan_free_1769965756749.png" alt="Free Plan" class="card-img-top">
+                <div class="section-title">Free Tools</div>
+                <div class="section-desc">Open source and free-to-use AI utilities.</div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

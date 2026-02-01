@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - All in One AI</title>
+    <link rel="stylesheet" href="/static/css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+
+<body>
+    <div class="background-gradient login-bg"></div>
+    <div class="login-wrapper">
+        <div class="glass-card login-box fade-in-up" id="login-form">
+            <h1 class="login-title">Welcome Back to All in One AI</h1>
+            <p style="color: var(--text-muted); margin-bottom: 2rem;">Enter your credentials to access the tools.</p>
+
+            <div class="input-group">
+                <label>Email Address</label>
+                <input type="email" class="input-field" placeholder="john@example.com" id="login-email">
+            </div>
+
+            <div class="input-group">
+                <label>Password</label>
+                <input type="password" class="input-field" placeholder="••••••••" id="login-password">
+            </div>
+
+            <button class="btn-primary" onclick="handleLogin()">Sign In</button>
+
+            <div class="auth-switch">
+                <p>Don't have an account? <a onclick="switchView('register')">Sign up</a></p>
+                <p style="margin-top: 0.5rem;"><a onclick="switchView('forgot-password')">Forgot password?</a></p>
+            </div>
+        </div>
+
+        <div class="glass-card login-box fade-in-up" id="register-form" style="display: none;">
+            <h1 class="login-title">Create Account</h1>
+            <p style="color: var(--text-muted); margin-bottom: 2rem;">Join the future of AI tools.</p>
+
+            <div class="input-group">
+                <label>Full Name</label>
+                <input type="text" class="input-field" placeholder="John Doe" id="register-name">
+            </div>
+
+            <div class="input-group">
+                <label>Email Address</label>
+                <input type="email" class="input-field" placeholder="john@example.com" id="register-email">
+            </div>
+
+            <div class="input-group">
+                <label>Password</label>
+                <input type="password" class="input-field" placeholder="Create a password" id="register-password">
+            </div>
+
+            <div class="input-group">
+                <label>Confirm Password</label>
+                <input type="password" class="input-field" placeholder="Re-enter password"
+                    id="register-confirm-password">
+            </div>
+
+            <button class="btn-primary" onclick="handleRegister()">Create Account</button>
+
+            <div class="auth-switch">
+                <p>Already have an account? <a onclick="switchView('login')">Sign in</a></p>
+            </div>
+        </div>
+
+        <!-- Forgot Password Form -->
+        <div class="glass-card login-box fade-in-up" id="forgot-password-form" style="display: none;">
+            <h1 class="login-title">Reset Password</h1>
+            <p style="color: var(--text-muted); margin-bottom: 2rem;">Enter your email to receive a reset link.</p>
+
+            <div class="input-group">
+                <label>Email Address</label>
+                <input type="email" class="input-field" placeholder="john@example.com" id="forgot-email">
+            </div>
+
+            <button class="btn-primary" onclick="handleForgotPassword()">Send Reset Link</button>
+
+            <div class="auth-switch">
+                <p>Remembered your password? <a onclick="switchView('login')">Sign in</a></p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Firebase SDKs (Placeholder for now) -->
+    <script>
+        function switchView(viewName) {
+            const loginForm = document.getElementById('login-form');
+            const registerForm = document.getElementById('register-form');
+            const forgotForm = document.getElementById('forgot-password-form');
+
+            // Hide all first
+            loginForm.style.display = 'none';
+            registerForm.style.display = 'none';
+            forgotForm.style.display = 'none';
+
+            // Show selected
+            if (viewName === 'login') {
+                loginForm.style.display = 'block';
+                loginForm.classList.add('fade-in-up');
+            } else if (viewName === 'register') {
+                registerForm.style.display = 'block';
+                registerForm.classList.add('fade-in-up');
+            } else if (viewName === 'forgot-password') {
+                forgotForm.style.display = 'block';
+                forgotForm.classList.add('fade-in-up');
+            }
+        }
+
+        function validateEmail(email) {
+            const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            return re.test(email);
+        }
+
+        function handleLogin() {
+            const email = document.getElementById('login-email').value;
+            const password = document.getElementById('login-password').value;
+
+            if (!email || !password) {
+                alert("Please enter both email and password.");
+                return;
+            }
+
+            if (!validateEmail(email)) {
+                alert("Please enter a valid email address.");
+                return;
+            }
+
+            // Mock authentication
+            console.log("Logging in with:", email);
+            setTimeout(() => {
+                window.location.href = "/home";
+            }, 500);
+        }
+
+        function handleRegister() {
+            const name = document.getElementById('register-name').value;
+            const email = document.getElementById('register-email').value;
+            const password = document.getElementById('register-password').value;
+            const confirmPassword = document.getElementById('register-confirm-password').value;
+
+            if (!name || !email || !password || !confirmPassword) {
+                alert("Please fill in all fields.");
+                return;
+            }
+
+            if (!validateEmail(email)) {
+                alert("Please enter a valid email address.");
+                return;
+            }
+
+            if (password !== confirmPassword) {
+                alert("Passwords do not match!");
+                return;
+            }
+
+            alert("Account created successfully! Logging you in...");
+            setTimeout(() => {
+                window.location.href = "/home";
+            }, 500);
+        }
+
+        function handleForgotPassword() {
+            const email = document.getElementById('forgot-email').value;
+
+            if (!email) {
+                alert("Please enter your email address.");
+                return;
+            }
+
+            if (!validateEmail(email)) {
+                alert("Please enter a valid email address.");
+                return;
+            }
+
+            alert(`Password reset link sent to ${email}! Check your inbox (or spam folder).`);
+            switchView('login');
+        }
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Categories - All in One AI</title>
+    <link rel="stylesheet" href="/static/css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+
+<body>
+    <div class="background-gradient"></div>
+    <div class="container fade-in-up">
+        <header style="margin-bottom: 2rem; display: flex; align-items: center; justify-content: space-between;">
+            <a href="/home" class="nav-back">&larr; Back to Home</a>
+            <h2
+                style="margin: 0; text-transform: capitalize; font-size: 2rem; background: linear-gradient(135deg, #fff 0%, var(--primary-color) 100%); background-clip: text; -webkit-background-clip: text; -webkit-text-fill-color: transparent;">
+                {{ type }} Categories</h2>
+            <div style="width: 100px;"></div>
+        </header>
+
+        <div id="categories-container" class="section-grid">
+            <div class="glass-card section-card">
+                <div class="section-title">Loading...</div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const urlParams = new URLSearchParams(window.location.search);
+        const type = urlParams.get('type');
+
+        // Update header
+        document.querySelector('header h2').textContent = `${type} Categories`;
+
+        // Image Mapping
+        const categoryImages = {
+            "Writing & Grammar": "cat_writing_1769965774087.png",
+            "Writing & Editing": "cat_writing_1769965774087.png",
+            "Document Editing & Notes": "cat_writing_1769965774087.png",
+            "Document Creation & Editing": "cat_writing_1769965774087.png",
+            "PDF Help": "cat_pdf_1769965818521.png",
+            "PDF & Files": "cat_pdf_1769965818521.png",
+            "Study & Learning": "cat_study_1769965834146.png",
+            "Study Tools": "cat_study_1769965834146.png",
+            "Research & Sources": "cat_study_1769965834146.png",
+            "Coding Help": "cat_coding_1769965800755.png",
+            "Coding & Development": "cat_coding_1769965800755.png",
+            "Planning & Productivity": "cat_productivity_1769965870649.png",
+            "Automation & Productivity": "cat_productivity_1769965870649.png",
+            "Audio & Notes": "cat_audio_1769965886502.png",
+            "Extras (Projects)": "cat_image_1769965850304.png"
+        };
+
+        const defaultImage = "cat_productivity_1769965870649.png"; // Fallback
+
+        async function loadCategories() {
+            try {
+                const response = await fetch(`/api/categories?type=${type}`);
+                const categories = await response.json();
+                const container = document.getElementById('categories-container');
+                container.innerHTML = '';
+
+                categories.sort().forEach(cat => {
+                    const el = document.createElement('div');
+                    el.className = 'glass-card section-card';
+                    el.onclick = () => {
+                        window.location.href = `/tools?type=${type}&category=${encodeURIComponent(cat)}`;
+                    };
+
+                    const img = categoryImages[cat] || defaultImage;
+
+                    el.innerHTML = `
+                        <img src="/static/images/${img}" alt="${cat}" class="card-img-top">
+                        <div class="section-title" style="font-size: 1.5rem;">${cat}</div>
+                        <div class="section-desc">Explore tools &rarr;</div>
+                    `;
+                    container.appendChild(el);
+                });
+            } catch (e) {
+                console.error("Error loading categories:", e);
+            }
+        }
+
+        loadCategories();
+    </script>
+</body>
+
+</html>

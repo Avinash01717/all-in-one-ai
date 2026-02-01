@@ -1,0 +1,362 @@
+[
+  {
+    "name": "ChatGPT",
+    "category": "Writing & Grammar",
+    "type": "unpaid",
+    "url": "https://chat.openai.com",
+    "icon": "💬",
+    "description": "Essays, explanations, summaries (Free Tier)"
+  },
+  {
+    "name": "Grammarly",
+    "category": "Writing & Grammar",
+    "type": "unpaid",
+    "url": "https://www.grammarly.com",
+    "icon": "📝",
+    "description": "Grammar and clarity fixes (Free Plan)"
+  },
+  {
+    "name": "QuillBot",
+    "category": "Writing & Grammar",
+    "type": "unpaid",
+    "url": "https://quillbot.com",
+    "icon": "✒️",
+    "description": "Paraphrasing and summarizing"
+  },
+  {
+    "name": "Wordtune",
+    "category": "Writing & Grammar",
+    "type": "unpaid",
+    "url": "https://www.wordtune.com",
+    "icon": "✨",
+    "description": "Rewrite for tone and clarity"
+  },
+  {
+    "name": "Google Docs + Smart Compose",
+    "category": "Document Editing & Notes",
+    "type": "unpaid",
+    "url": "https://docs.google.com",
+    "icon": "📄",
+    "description": "Free writing help in docs"
+  },
+  {
+    "name": "Notion",
+    "category": "Document Editing & Notes",
+    "type": "unpaid",
+    "url": "https://www.notion.so",
+    "icon": "📓",
+    "description": "Notes, templates, databases (Free Plan)"
+  },
+  {
+    "name": "Microsoft OneNote",
+    "category": "Document Editing & Notes",
+    "type": "unpaid",
+    "url": "https://www.onenote.com",
+    "icon": "📝",
+    "description": "Note organization with ink/text"
+  },
+  {
+    "name": "Zoho Writer",
+    "category": "Document Editing & Notes",
+    "type": "unpaid",
+    "url": "https://www.zoho.com/writer",
+    "icon": "✍️",
+    "description": "Word processor with AI writing tools"
+  },
+  {
+    "name": "ChatPDF",
+    "category": "PDF Help",
+    "type": "unpaid",
+    "url": "https://www.chatpdf.com",
+    "icon": "💬",
+    "description": "Upload and ask questions about a PDF"
+  },
+  {
+    "name": "PDFCandy",
+    "category": "PDF Help",
+    "type": "unpaid",
+    "url": "https://pdfcandy.com",
+    "icon": "🍬",
+    "description": "Convert, split, merge PDFs"
+  },
+  {
+    "name": "Smallpdf",
+    "category": "PDF Help",
+    "type": "unpaid",
+    "url": "https://smallpdf.com",
+    "icon": "🔺",
+    "description": "Basic PDF edits (Free Limited)"
+  },
+  {
+    "name": "Khan Academy + GPT",
+    "category": "Study & Learning",
+    "type": "unpaid",
+    "url": "https://www.khanacademy.org",
+    "icon": "🎓",
+    "description": "Learning help and chat"
+  },
+  {
+    "name": "Perplexity.ai",
+    "category": "Study & Learning",
+    "type": "unpaid",
+    "url": "https://www.perplexity.ai",
+    "icon": "🔍",
+    "description": "Research answers with citations"
+  },
+  {
+    "name": "You.com",
+    "category": "Study & Learning",
+    "type": "unpaid",
+    "url": "https://you.com",
+    "icon": "🔎",
+    "description": "AI search for homework"
+  },
+  {
+    "name": "Quizlet",
+    "category": "Study & Learning",
+    "type": "unpaid",
+    "url": "https://quizlet.com",
+    "icon": "🃏",
+    "description": "Flashcards and study sets"
+  },
+  {
+    "name": "Perplexity.ai",
+    "category": "Research & Sources",
+    "type": "unpaid",
+    "url": "https://www.perplexity.ai",
+    "icon": "🧠",
+    "description": "Concise answers with source links"
+  },
+  {
+    "name": "Zotero",
+    "category": "Research & Sources",
+    "type": "unpaid",
+    "url": "https://www.zotero.org",
+    "icon": "📚",
+    "description": "Collect and manage research references"
+  },
+  {
+    "name": "Hugging Face",
+    "category": "Research & Sources",
+    "type": "unpaid",
+    "url": "https://huggingface.co",
+    "icon": "🤗",
+    "description": "Free models for summaries"
+  },
+  {
+    "name": "Replit AI",
+    "category": "Coding Help",
+    "type": "unpaid",
+    "url": "https://replit.com",
+    "icon": "💻",
+    "description": "Coding and practice"
+  },
+  {
+    "name": "Codeium",
+    "category": "Coding Help",
+    "type": "unpaid",
+    "url": "https://codeium.com",
+    "icon": "🤖",
+    "description": "AI code help"
+  },
+  {
+    "name": "Stack Overflow",
+    "category": "Coding Help",
+    "type": "unpaid",
+    "url": "https://stackoverflow.com",
+    "icon": "🥞",
+    "description": "Debug and explain code with AI summaries"
+  },
+  {
+    "name": "Zapier",
+    "category": "Planning & Productivity",
+    "type": "unpaid",
+    "url": "https://zapier.com",
+    "icon": "⚡",
+    "description": "Simple task automation"
+  },
+  {
+    "name": "Google Keep",
+    "category": "Planning & Productivity",
+    "type": "unpaid",
+    "url": "https://keep.google.com",
+    "icon": "📝",
+    "description": "Quick notes and reminders"
+  },
+  {
+    "name": "Trello",
+    "category": "Planning & Productivity",
+    "type": "unpaid",
+    "url": "https://trello.com",
+    "icon": "📋",
+    "description": "Boards and task lists"
+  },
+  {
+    "name": "ChatGPT Plus",
+    "category": "Writing & Editing",
+    "type": "paid",
+    "url": "https://chat.openai.com",
+    "icon": "🚀",
+    "description": "Faster responses, advanced features"
+  },
+  {
+    "name": "Grammarly Premium",
+    "category": "Writing & Editing",
+    "type": "paid",
+    "url": "https://www.grammarly.com/premium",
+    "icon": "✅",
+    "description": "Style, tone, plagiarism checks"
+  },
+  {
+    "name": "Wordtune Premium",
+    "category": "Writing & Editing",
+    "type": "paid",
+    "url": "https://www.wordtune.com",
+    "icon": "💎",
+    "description": "Full paraphrase options"
+  },
+  {
+    "name": "ProWritingAid",
+    "category": "Writing & Editing",
+    "type": "paid",
+    "url": "https://prowritingaid.com",
+    "icon": "🛡️",
+    "description": "In-depth writing reports"
+  },
+  {
+    "name": "Notion AI",
+    "category": "Document Creation & Editing",
+    "type": "paid",
+    "url": "https://www.notion.so/product/ai",
+    "icon": "🧠",
+    "description": "Advanced writing support inside notes"
+  },
+  {
+    "name": "MS Word 365 + Editor AI",
+    "category": "Document Creation & Editing",
+    "type": "paid",
+    "url": "https://www.microsoft.com/microsoft-365/word",
+    "icon": "W",
+    "description": "Grammar, style, rephrasing"
+  },
+  {
+    "name": "Adobe Acrobat Pro",
+    "category": "Document Creation & Editing",
+    "type": "paid",
+    "url": "https://www.adobe.com/acrobat",
+    "icon": "📕",
+    "description": "Advanced PDF editing"
+  },
+  {
+    "name": "PDF Expert",
+    "category": "PDF & Files",
+    "type": "paid",
+    "url": "https://pdfexpert.com",
+    "icon": "📱",
+    "description": "Strong PDF editing (Mac/Windows)"
+  },
+  {
+    "name": "Smallpdf Pro",
+    "category": "PDF & Files",
+    "type": "paid",
+    "url": "https://smallpdf.com/pro",
+    "icon": "🔺",
+    "description": "Unlimited PDF tools"
+  },
+  {
+    "name": "Quizlet Plus",
+    "category": "Study Tools",
+    "type": "paid",
+    "url": "https://quizlet.com/upgrade",
+    "icon": "➕",
+    "description": "AI flashcard help and study modes"
+  },
+  {
+    "name": "Wolfram Alpha Pro",
+    "category": "Study Tools",
+    "type": "paid",
+    "url": "https://www.wolframalpha.com/pro",
+    "icon": "🔢",
+    "description": "Math problem solving"
+  },
+  {
+    "name": "Consensus",
+    "category": "Study Tools",
+    "type": "paid",
+    "url": "https://consensus.app",
+    "icon": "🔬",
+    "description": "Research summarizer"
+  },
+  {
+    "name": "Descript",
+    "category": "Audio & Notes",
+    "type": "paid",
+    "url": "https://www.descript.com",
+    "icon": "🎙️",
+    "description": "Record, transcribe, edit audio/video"
+  },
+  {
+    "name": "Otter.ai",
+    "category": "Audio & Notes",
+    "type": "paid",
+    "url": "https://otter.ai",
+    "icon": "🦦",
+    "description": "Live transcription and meeting notes"
+  },
+  {
+    "name": "GitHub Copilot",
+    "category": "Coding & Development",
+    "type": "paid",
+    "url": "https://github.com/features/copilot",
+    "icon": "👨‍💻",
+    "description": "AI code help in editors"
+  },
+  {
+    "name": "Tabnine",
+    "category": "Coding & Development",
+    "type": "paid",
+    "url": "https://www.tabnine.com",
+    "icon": "⌨️",
+    "description": "Advanced code completions"
+  },
+  {
+    "name": "Zapier AI",
+    "category": "Automation & Productivity",
+    "type": "paid",
+    "url": "https://zapier.com/ai",
+    "icon": "⚡",
+    "description": "Smarter automations"
+  },
+  {
+    "name": "Notion AI",
+    "category": "Automation & Productivity",
+    "type": "paid",
+    "url": "https://www.notion.so/product/ai",
+    "icon": "💡",
+    "description": "Generate outlines, ideas, research"
+  },
+  {
+    "name": "Canva Pro",
+    "category": "Extras (Projects)",
+    "type": "paid",
+    "url": "https://www.canva.com/pro",
+    "icon": "🎨",
+    "description": "Design templates and AI magic"
+  },
+  {
+    "name": "Midjourney",
+    "category": "Extras (Projects)",
+    "type": "paid",
+    "url": "https://www.midjourney.com",
+    "icon": "⛵",
+    "description": "Images for presentations"
+  },
+  {
+    "name": "Adobe Firefly",
+    "category": "Extras (Projects)",
+    "type": "paid",
+    "url": "https://firefly.adobe.com",
+    "icon": "🔥",
+    "description": "Creative assets"
+  }
+]

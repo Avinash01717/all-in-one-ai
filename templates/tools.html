@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tools - All in One AI</title>
+    <link rel="stylesheet" href="/static/css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+
+<body>
+    <div class="background-gradient"></div>
+    <div class="container fade-in-up">
+        <header style="margin-bottom: 2rem; display: flex; align-items: center; justify-content: space-between;">
+            <a href="#" class="nav-back" id="back-link">&larr; Back to Categories</a>
+            <h2 style="margin: 0; font-size: 2rem; background: linear-gradient(135deg, #fff 0%, var(--primary-color) 100%); background-clip: text; -webkit-background-clip: text; -webkit-text-fill-color: transparent;"
+                id="page-title">Loading...</h2>
+            <div style="width: 100px;"></div>
+        </header>
+
+        <div id="tools-container" class="tools-grid">
+            <div class="glass-card tool-card">
+                <div class="tool-name">Loading Tools...</div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Read parameters directly from URL to avoid Jinja2 escaping issues with special characters (like &)
+        const urlParams = new URLSearchParams(window.location.search);
+        const type = urlParams.get('type') || 'unpaid';
+        const category = urlParams.get('category') || 'All';
+
+        // Update header
+        document.getElementById('page-title').textContent = category;
+        document.getElementById('back-link').href = `/subcategories?type=${type}`;
+
+        async function loadTools() {
+            const container = document.getElementById('tools-container');
+
+            try {
+                const response = await fetch(`/api/tools?type=${type}&category=${encodeURIComponent(category)}`);
+                if (response.ok) {
+                    const tools = await response.json();
+                    renderTools(tools);
+                }
+            } catch (err) {
+                console.error("Error fetching tools", err);
+                container.innerHTML = '<div style="color:red">Failed to load tools.</div>';
+            }
+        }
+
+        function renderTools(tools) {
+            const container = document.getElementById('tools-container');
+            container.innerHTML = '';
+
+            if (tools.length === 0) {
+                container.innerHTML = '<div style="grid-column: 1/-1; text-align: center; color: var(--text-muted);">No tools found in this category.</div>';
+                return;
+            }
+
+            tools.forEach(tool => {
+                const el = document.createElement('a');
+                el.className = 'glass-card tool-card';
+                el.href = tool.url;
+                el.target = "_blank";
+
+                el.innerHTML = `
+                    <div class="tool-icon">${tool.icon || '🛠️'}</div>
+                    <div class="tool-name">${tool.name}</div>
+                    <div class="tool-desc">${tool.description || tool.category}</div>
+                `;
+                container.appendChild(el);
+            });
+        }
+
+        loadTools();
+    </script>
+</body>
+
+</html>

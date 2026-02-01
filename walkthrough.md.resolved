@@ -1,0 +1,42 @@
+# All in One AI - Walkthrough
+
+I have built the "All in One AI" application using **FastAPI** for the backend and **HTML/CSS/JS** for the frontend, with a modern, glassmorphism design.
+
+## Features Implemented
+
+1.  **Login Page**: A sleek entry point (Authentication is mocked for prototype).
+2.  **Home Page**: Clear selection between **Paid** and **Free** (Unpaid) tools.
+3.  **Subcategories (NEW)**: Filter tools by category (e.g., Writing, Coding, PDF).
+4.  **Tools List**: Display tools with descriptions and icons.
+5.  **AI Tools Database**: Comprehensive JSON database with 40+ tools.
+
+## Demo Flow
+
+### 1. Home Dashboard
+Users choose between Paid and Free tools.
+![Home Page Mockup](https://via.placeholder.com/800x450/0f172a/8b5cf6?text=Paid+vs+Free+Tools)
+
+### 2. Subcategories Selection
+After selecting a type (e.g., Free), users see available categories.
+- Writing & Grammar
+- Coding Help
+- PDF Help
+- ...and more.
+
+### 3. Tools List
+Clicking a category shows the specific tools.
+- **Top Paid Tools**: ChatGPT Plus, Midjourney, Adobe Firefly...
+- **Top Free Tools**: Bing Image Creator, ChatPDF, Replit...
+
+## How to Run
+
+The server is currently running in the background.
+
+If you need to restart it:
+```powershell
+python -m uvicorn main:app --host 127.0.0.1 --port 8000 --reload
+```
+
+## Next Steps
+- Implement search across all tools.
+- Add user ratings or reviews.
