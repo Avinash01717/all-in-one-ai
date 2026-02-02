@@ -3,3 +3,7 @@ uvicorn
 jinja2
 python-multipart
 firebase-admin
+sqlalchemy
+passlib[bcrypt]
+itsdangerous
+psycopg2-binary

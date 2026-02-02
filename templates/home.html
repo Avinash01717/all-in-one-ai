@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Home - All in One AI</title>
-    <link rel="stylesheet" href="/static/css/style.css">
+    <link rel="stylesheet" href="/static/css/style.css?v=2">
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 </head>
 
@@ -13,9 +13,26 @@
     <div class="background-gradient"></div>
     <div class="container fade-in-up">
         <header class="home-header">
-            <h1 class="login-title" style="margin-bottom: 0.5rem;">All in One AI</h1>
-            <p style="color: var(--text-muted); font-size: 1.1rem;">Choose your path.</p>
+            <div style="display: flex; justify-content: space-between; align-items: center; width: 100%;">
+                <div>
+                    <h1 class="login-title" style="margin-bottom: 0.5rem;">All in One AI</h1>
+                    <p style="color: var(--text-muted); font-size: 1.1rem;">Choose your path.</p>
+                </div>
+                <button class="btn-primary" style="width: auto; padding: 0.5rem 1.5rem;"
+                    onclick="handleLogout()">Logout</button>
+            </div>
         </header>
+
+        <script>
+            async function handleLogout() {
+                try {
+                    await fetch("/auth/logout", { method: "POST" });
+                    window.location.href = "/";
+                } catch (e) {
+                    console.error(e);
+                }
+            }
+        </script>
 
         <div class="section-grid">
             <div class="glass-card section-card" onclick="window.location.href='/subcategories?type=paid'">

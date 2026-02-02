@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login - All in One AI</title>
-    <link rel="stylesheet" href="/static/css/style.css">
+    <link rel="stylesheet" href="/static/css/style.css?v=3">
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 </head>
 
@@ -23,7 +23,16 @@
 
             <div class="input-group">
                 <label>Password</label>
-                <input type="password" class="input-field" placeholder="••••••••" id="login-password">
+                <div class="password-wrapper">
+                    <input type="password" class="input-field" placeholder="••••••••" id="login-password">
+                    <span class="password-toggle" onclick="togglePassword('login-password')">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
+                            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" />
+                            <circle cx="12" cy="12" r="3" />
+                        </svg>
+                    </span>
+                </div>
             </div>
 
             <button class="btn-primary" onclick="handleLogin()">Sign In</button>
@@ -50,13 +59,31 @@
 
             <div class="input-group">
                 <label>Password</label>
-                <input type="password" class="input-field" placeholder="Create a password" id="register-password">
+                <div class="password-wrapper">
+                    <input type="password" class="input-field" placeholder="Create a password" id="register-password">
+                    <span class="password-toggle" onclick="togglePassword('register-password')">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
+                            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" />
+                            <circle cx="12" cy="12" r="3" />
+                        </svg>
+                    </span>
+                </div>
             </div>
 
             <div class="input-group">
                 <label>Confirm Password</label>
-                <input type="password" class="input-field" placeholder="Re-enter password"
-                    id="register-confirm-password">
+                <div class="password-wrapper">
+                    <input type="password" class="input-field" placeholder="Re-enter password"
+                        id="register-confirm-password">
+                    <span class="password-toggle" onclick="togglePassword('register-confirm-password')">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
+                            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" />
+                            <circle cx="12" cy="12" r="3" />
+                        </svg>
+                    </span>
+                </div>
             </div>
 
             <button class="btn-primary" onclick="handleRegister()">Create Account</button>
@@ -68,44 +95,67 @@
 
         <!-- Forgot Password Form -->
         <div class="glass-card login-box fade-in-up" id="forgot-password-form" style="display: none;">
-            <h1 class="login-title">Reset Password</h1>
-            <p style="color: var(--text-muted); margin-bottom: 2rem;">Enter your email to receive a reset link.</p>
+            <h1 class="login-title">Recover Password</h1>
+            <p style="color: var(--text-muted); margin-bottom: 2rem;">Enter your email to verify your account.</p>
 
             <div class="input-group">
                 <label>Email Address</label>
                 <input type="email" class="input-field" placeholder="john@example.com" id="forgot-email">
             </div>
 
-            <button class="btn-primary" onclick="handleForgotPassword()">Send Reset Link</button>
+            <button class="btn-primary" onclick="handleForgotPassword()">Verify Email</button>
 
             <div class="auth-switch">
                 <p>Remembered your password? <a onclick="switchView('login')">Sign in</a></p>
             </div>
         </div>
+
+        <!-- Reset Password Form -->
+        <div class="glass-card login-box fade-in-up" id="reset-password-form" style="display: none;">
+            <h1 class="login-title">Set New Password</h1>
+            <p style="color: var(--text-muted); margin-bottom: 2rem;">Create a new password for <span
+                    id="reset-email-display"></span></p>
+
+            <div class="input-group">
+                <label>New Password</label>
+                <div class="password-wrapper">
+                    <input type="password" class="input-field" placeholder="New password" id="reset-password">
+                    <span class="password-toggle" onclick="togglePassword('reset-password')">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
+                            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" />
+                            <circle cx="12" cy="12" r="3" />
+                        </svg>
+                    </span>
+                </div>
+            </div>
+
+            <button class="btn-primary" onclick="handleResetPassword()">Update Password</button>
+        </div>
     </div>
 
-    <!-- Firebase SDKs (Placeholder for now) -->
     <script>
+        let currentResetEmail = "";
+
+        function togglePassword(inputId) {
+            const input = document.getElementById(inputId);
+            if (input.type === "password") {
+                input.type = "text";
+            } else {
+                input.type = "password";
+            }
+        }
+
         function switchView(viewName) {
-            const loginForm = document.getElementById('login-form');
-            const registerForm = document.getElementById('register-form');
-            const forgotForm = document.getElementById('forgot-password-form');
+            const forms = ['login-form', 'register-form', 'forgot-password-form', 'reset-password-form'];
+            forms.forEach(id => {
+                document.getElementById(id).style.display = 'none';
+            });
 
-            // Hide all first
-            loginForm.style.display = 'none';
-            registerForm.style.display = 'none';
-            forgotForm.style.display = 'none';
-
-            // Show selected
-            if (viewName === 'login') {
-                loginForm.style.display = 'block';
-                loginForm.classList.add('fade-in-up');
-            } else if (viewName === 'register') {
-                registerForm.style.display = 'block';
-                registerForm.classList.add('fade-in-up');
-            } else if (viewName === 'forgot-password') {
-                forgotForm.style.display = 'block';
-                forgotForm.classList.add('fade-in-up');
+            const activeForm = document.getElementById(viewName + (viewName.includes('form') ? '' : '-form'));
+            if (activeForm) {
+                activeForm.style.display = 'block';
+                activeForm.classList.add('fade-in-up');
             }
         }
 
@@ -114,69 +164,111 @@
             return re.test(email);
         }
 
-        function handleLogin() {
+        async function handleLogin() {
             const email = document.getElementById('login-email').value;
             const password = document.getElementById('login-password').value;
 
-            if (!email || !password) {
-                alert("Please enter both email and password.");
-                return;
-            }
+            if (!email || !password) return alert("Please enter both email and password.");
 
-            if (!validateEmail(email)) {
-                alert("Please enter a valid email address.");
-                return;
-            }
+            try {
+                const response = await fetch("/auth/login", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({ email, password })
+                });
 
-            // Mock authentication
-            console.log("Logging in with:", email);
-            setTimeout(() => {
-                window.location.href = "/home";
-            }, 500);
+                if (response.ok) {
+                    window.location.href = "/home";
+                } else {
+                    const data = await response.json();
+                    if (response.status === 404) {
+                        alert("Account does not exist. Please create an account.");
+                        switchView('register');
+                        // Pre-fill email if possible
+                        document.getElementById('register-email').value = email;
+                    } else {
+                        alert(data.detail || "Login failed");
+                    }
+                }
+            } catch (e) {
+                alert("An error occurred. Please try again.");
+            }
         }
 
-        function handleRegister() {
+        async function handleRegister() {
             const name = document.getElementById('register-name').value;
             const email = document.getElementById('register-email').value;
             const password = document.getElementById('register-password').value;
             const confirmPassword = document.getElementById('register-confirm-password').value;
 
-            if (!name || !email || !password || !confirmPassword) {
-                alert("Please fill in all fields.");
-                return;
-            }
+            if (!name || !email || !password) return alert("Please fill in all fields.");
+            if (password !== confirmPassword) return alert("Passwords do not match!");
 
-            if (!validateEmail(email)) {
-                alert("Please enter a valid email address.");
-                return;
-            }
+            try {
+                const response = await fetch("/auth/register", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({ email, password, full_name: name })
+                });
 
-            if (password !== confirmPassword) {
-                alert("Passwords do not match!");
-                return;
+                if (response.ok) {
+                    alert("Account created successfully! Please login.");
+                    switchView('login');
+                } else {
+                    const data = await response.json();
+                    alert(data.detail || "Registration failed");
+                }
+            } catch (e) {
+                console.error(e);
+                alert("An error occurred: " + e.message);
             }
-
-            alert("Account created successfully! Logging you in...");
-            setTimeout(() => {
-                window.location.href = "/home";
-            }, 500);
         }
 
-        function handleForgotPassword() {
+        async function handleForgotPassword() {
             const email = document.getElementById('forgot-email').value;
+            if (!email) return alert("Please enter your email.");
 
-            if (!email) {
-                alert("Please enter your email address.");
-                return;
+            try {
+                const response = await fetch("/auth/forgot-password", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({ email })
+                });
+
+                if (response.ok) {
+                    currentResetEmail = email;
+                    document.getElementById('reset-email-display').innerText = email;
+                    switchView('reset-password');
+                } else {
+                    const data = await response.json();
+                    alert(data.detail || "Error verifying email");
+                }
+            } catch (e) {
+                alert("An error occurred.");
             }
+        }
 
-            if (!validateEmail(email)) {
-                alert("Please enter a valid email address.");
-                return;
+        async function handleResetPassword() {
+            const newPassword = document.getElementById('reset-password').value;
+            if (!newPassword) return alert("Please enter a new password.");
+
+            try {
+                const response = await fetch("/auth/reset-password", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({ email: currentResetEmail, new_password: newPassword })
+                });
+
+                if (response.ok) {
+                    alert("Password updated! Please login.");
+                    switchView('login');
+                } else {
+                    const data = await response.json();
+                    alert(data.detail || "Failed to reset password");
+                }
+            } catch (e) {
+                alert("An error occurred.");
             }
-
-            alert(`Password reset link sent to ${email}! Check your inbox (or spam folder).`);
-            switchView('login');
         }
     </script>
 </body>
