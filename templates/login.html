@@ -7,6 +7,56 @@
     <title>Login - All in One AI</title>
     <link rel="stylesheet" href="/static/css/style.css?v=3">
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        .error-message {
+            color: #ff4d4d;
+            font-size: 0.85rem;
+            margin-top: 5px;
+            display: none;
+        }
+
+        .requirement-list {
+            list-style: none;
+            padding: 0;
+            margin-top: 5px;
+            font-size: 0.85rem;
+            color: var(--text-muted);
+        }
+
+        .requirement-list li {
+            display: flex;
+            align-items: center;
+            margin-bottom: 2px;
+        }
+
+        .requirement-list li.valid {
+            color: #4caf50;
+        }
+
+        .requirement-list li.invalid {
+            color: #ff4d4d;
+        }
+
+        .requirement-list li::before {
+            content: '•';
+            margin-right: 5px;
+            font-weight: bold;
+        }
+
+        .requirement-list li.valid::before {
+            content: '✓';
+        }
+
+        .requirement-list li.invalid::before {
+            content: '✕';
+        }
+
+
+
+        .input-error {
+            border-color: #ff4d4d !important;
+        }
+    </style>
 </head>
 
 <body>
@@ -60,7 +110,9 @@
             <div class="input-group">
                 <label>Password</label>
                 <div class="password-wrapper">
-                    <input type="password" class="input-field" placeholder="Create a password" id="register-password">
+                    <input type="password" class="input-field" placeholder="Create a password" id="register-password"
+                        oninput="checkPasswordStrength('register-password', 'register-password-error')">
+                    <div id="register-password-error" class="error-message"></div>
                     <span class="password-toggle" onclick="togglePassword('register-password')">
                         <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
                             stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -69,6 +121,13 @@
                         </svg>
                     </span>
                 </div>
+                <ul id="register-requirements" class="requirement-list">
+                    <li id="req-len-register" class="invalid">Minimum 9 characters</li>
+                    <li id="req-cap-register" class="invalid">At least 1 uppercase letter</li>
+                    <li id="req-num-register" class="invalid">At least 1 number</li>
+                    <li id="req-sym-register" class="invalid">At least 1 symbol</li>
+                </ul>
+
             </div>
 
             <div class="input-group">
@@ -119,7 +178,9 @@
             <div class="input-group">
                 <label>New Password</label>
                 <div class="password-wrapper">
-                    <input type="password" class="input-field" placeholder="New password" id="reset-password">
+                    <input type="password" class="input-field" placeholder="New password" id="reset-password"
+                        oninput="checkPasswordStrength('reset-password', 'reset-password-error')">
+                    <div id="reset-password-error" class="error-message"></div>
                     <span class="password-toggle" onclick="togglePassword('reset-password')">
                         <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
                             stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -128,6 +189,12 @@
                         </svg>
                     </span>
                 </div>
+                <ul id="reset-requirements" class="requirement-list">
+                    <li id="req-len-reset" class="invalid">Minimum 9 characters</li>
+                    <li id="req-cap-reset" class="invalid">At least 1 uppercase letter</li>
+                    <li id="req-num-reset" class="invalid">At least 1 number</li>
+                    <li id="req-sym-reset" class="invalid">At least 1 symbol</li>
+                </ul>
             </div>
 
             <button class="btn-primary" onclick="handleResetPassword()">Update Password</button>
@@ -162,6 +229,44 @@
         function validateEmail(email) {
             const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
             return re.test(email);
+        }
+
+        function updateRequirement(elementId, isValid) {
+            const el = document.getElementById(elementId);
+            if (!el) return;
+            if (isValid) {
+                el.classList.remove('invalid');
+                el.classList.add('valid');
+            } else {
+                el.classList.remove('valid');
+                el.classList.add('invalid');
+            }
+        }
+
+        function checkPasswordStrength(inputId) {
+            const password = document.getElementById(inputId).value;
+            const suffix = inputId.includes('register') ? 'register' : 'reset';
+
+            const hasLen = password.length >= 9;
+            const hasCap = /[A-Z]/.test(password);
+            const hasNum = /\d/.test(password);
+            const hasSym = /[!@#$%^&*(),.?":{}|<>]/.test(password);
+
+            updateRequirement(`req-len-${suffix}`, hasLen);
+            updateRequirement(`req-cap-${suffix}`, hasCap);
+            updateRequirement(`req-num-${suffix}`, hasNum);
+            updateRequirement(`req-sym-${suffix}`, hasSym);
+
+            const isValid = hasLen && hasCap && hasNum && hasSym;
+            const inputField = document.getElementById(inputId);
+            if (isValid) {
+                inputField.classList.remove('input-error');
+            } else if (password.length > 0) {
+                inputField.classList.add('input-error');
+            } else {
+                inputField.classList.remove('input-error');
+            }
+            return isValid;
         }
 
         async function handleLogin() {
@@ -203,6 +308,10 @@
 
             if (!name || !email || !password) return alert("Please fill in all fields.");
             if (password !== confirmPassword) return alert("Passwords do not match!");
+
+            // Check validation again before submitting
+            const isValid = checkPasswordStrength('register-password', 'register-password-error');
+            if (!isValid) return; // Stop if invalid
 
             try {
                 const response = await fetch("/auth/register", {
@@ -251,6 +360,10 @@
         async function handleResetPassword() {
             const newPassword = document.getElementById('reset-password').value;
             if (!newPassword) return alert("Please enter a new password.");
+
+            // Check validation again
+            const isValid = checkPasswordStrength('reset-password', 'reset-password-error');
+            if (!isValid) return;
 
             try {
                 const response = await fetch("/auth/reset-password", {

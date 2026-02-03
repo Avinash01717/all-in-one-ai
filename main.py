@@ -53,6 +53,8 @@ class ResetPassword(BaseModel):
     new_password: str
 
 # --- Auth Helpers ---
+
+# --- Auth Helpers ---
 def verify_password(plain_password, hashed_password):
     return pwd_context.verify(plain_password, hashed_password)
 
@@ -61,6 +63,20 @@ def get_password_hash(password):
 
 def get_current_user_id(request: Request):
     return request.session.get("user_id")
+
+import re
+
+def validate_password_strength(password: str):
+    if len(password) < 9:
+        raise HTTPException(status_code=400, detail="Password must be at least 9 characters long")
+    if not re.search(r"[A-Z]", password):
+        raise HTTPException(status_code=400, detail="Password must contain at least one uppercase letter")
+    if not re.search(r"\d", password):
+        raise HTTPException(status_code=400, detail="Password must contain at least one number")
+    if not re.search(r"[!@#$%^&*(),.?\":{}|<>]", password):
+        raise HTTPException(status_code=400, detail="Password must contain at least one symbol")
+    return True
+
 
 # --- Views ---
 
@@ -96,6 +112,8 @@ async def register(user: UserCreate, db: Session = Depends(get_db)):
     if db_user:
         raise HTTPException(status_code=400, detail="Email already registered")
     
+    validate_password_strength(user.password)
+
     hashed_password = get_password_hash(user.password)
     new_user = User(email=user.email, full_name=user.full_name, hashed_password=hashed_password)
     db.add(new_user)
@@ -151,6 +169,8 @@ async def reset_password(data: ResetPassword, db: Session = Depends(get_db)):
     if not user:
         raise HTTPException(status_code=404, detail="User not found")
     
+    validate_password_strength(data.new_password)
+
     user.hashed_password = get_password_hash(data.new_password)
     db.commit()
     return {"message": "Password updated successfully"}
